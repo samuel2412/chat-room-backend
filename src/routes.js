@@ -22,6 +22,8 @@ routes.post('/room', RoomController.store );
 
 routes.get('/room', RoomController.index );
 
+routes.get('/room/:id', RoomController.show );
+
 //temporario, mudar pra um controller so de mensagem
 routes.post('/room/send', RoomController.update );
 

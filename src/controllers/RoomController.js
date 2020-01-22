@@ -8,6 +8,11 @@ module.exports = {
         return response.json(rooms)
     },
 
+    async show(request,response){
+        const room = await Room.findById(request.params.id);
+        return response.json(room)
+    },
+
     async store(request, response) {
         const { name } = request.body;
 
