@@ -17,8 +17,7 @@ module.exports = {
         const { name } = request.body;
 
             room = await Room.create({
-                name,
-                messages: []
+                name
             })
 
             //filtrar as conexoes que estao no maximo
@@ -33,7 +32,7 @@ module.exports = {
         return response.json(room)
     },
 
-    async update(request, response) {
+   /*  async update(request, response) {
         const { id, userName, message } = request.body;
 
         const room = await Room.findById(id);
@@ -47,6 +46,6 @@ module.exports = {
         await room.save();
 
         return response.json(room)
-    }
+    } */
     
 }

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema({
-    name: String,
-    messages:[]   
+    name: String, 
 });
 
 module.exports = mongoose.model('Room',RoomSchema);

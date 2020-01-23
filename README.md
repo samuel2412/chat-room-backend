@@ -1,14 +1,31 @@
 #Endpoints implementados:
 
-    #GET
-    /room   -> retorna lista de salas de chat cadastradas
-    /room/:id -> retorna a sala com o id informado
+#rota de teste   
+routes.get('/', (req, res) => {
+  res.send(`atualiza ? sim`);
+});
 
-    #POST
-    /room   -> cadastra nova sala de chat
-    /room/send -> acrescenta nova mensagem a lista de mensagens de determinada sala. Recebe o seguinte objeto 
-    {
-        "id": {id da sala},
-	    "userName": {nome do usuario},
-	    "message": {mensagem}
-    }
+#GET
+    #SALAS
+         --retorna a lista de salas
+         /room
+
+         --busca sala pelo id
+         /room/:id
+
+    #MENSAGENS
+         --busca a lista de mensagens em uma sala
+         /message/:roomId
+
+         --busca mensagem pelo id
+         /message/:id
+
+
+#POST
+    #SALAS
+         --cria uma sala
+         /room
+    #MENSAGENS
+         --envia uma mensagem
+         '/message/send'
+
