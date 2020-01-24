@@ -1,51 +1,39 @@
 const axios = require('axios');
-const Room = require('../models/Room');
-//const {findConnections,sendMessage} = require('../websocket');
+
 
 module.exports = {
     async index(request,response){
-        const rooms = await Room.find();
-        return response.json(rooms)
+        axios.get(`https://chat-room-4fe30.firebaseio.com/rooms.json`)
+        .then(res=>{
+            return response.json(res.data)
+        })
+        .catch(err=>{
+            return response.json(err)
+        })
     },
 
     async show(request,response){
-        const room = await Room.findById(request.params.id);
-        return response.json(room)
+        const {id} = request.params;
+        axios.get(`https://chat-room-4fe30.firebaseio.com/rooms/-${id}.json`)
+        .then(res=>{
+            return response.json(res.data)
+        })
+        .catch(err=>{
+            return response.json(err)
+        })
     },
 
     async store(request, response) {
         const { name } = request.body;
 
-            room = await Room.create({
-                name
-            })
-
-            //filtrar as conexoes que estao no maximo
-            //a 10km de distancia e que tenha pelo menos uma das techs filtradas
-           /*  const sendSocketMessageTo = findConnections(
-               {latitude,longitude},
-                techsArray
-                );
-
-                sendMessage(sendSocketMessageTo,'new-dev',dev) */
-        
-        return response.json(room)
+        axios.post(`https://chat-room-4fe30.firebaseio.com/rooms.json`, { name })
+        .then(res=>{
+            console.log(res)
+            return response.json(res.data)
+        })
+        .catch(err=>{
+            return response.json(err)
+        })
     },
-
-   /*  async update(request, response) {
-        const { id, userName, message } = request.body;
-
-        const room = await Room.findById(id);
-        
-        room.messages.push(
-            {
-                userName,
-                date: Date.now,
-                message
-            })
-        await room.save();
-
-        return response.json(room)
-    } */
     
 }

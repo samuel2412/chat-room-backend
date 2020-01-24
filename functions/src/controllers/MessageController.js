@@ -1,32 +1,44 @@
 const axios = require('axios');
-const Message = require('../models/Message');
-//const {findConnections,sendMessage} = require('../websocket');
+
 
 module.exports = {
     async index(request, response) {
-        const messages = await Message.find({ roomId: request.params.roomId });
-        return response.json(messages)
+        const {roomId} = request.params;
+    
+        axios.get(`https://chat-room-4fe30.firebaseio.com/messages.json?orderBy="roomId"&equalTo="${roomId}"`)
+        .then(res=>{
+            return response.json(res.data)
+        })
+        .catch(err=>{
+            return response.json(err)
+        })
+       
+        
     },
 
     async show(request, response) {
-        const message = await Message.findById(request.params.id);
-        return response.json(message)
+        const {id} = request.params;
+        axios.get(`https://chat-room-4fe30.firebaseio.com/messages/-${id}.json`)
+        .then(res=>{
+            return response.json(res.data)
+        })
+        .catch(err=>{
+            return response.json(err)
+        })
+        
+       
     },
 
     async store(request, response) {
         const { userName, text, roomId } = request.body;
-
-        message = await Message.create({ userName, text, date: Date.now() , roomId })
-
-        //filtrar as conexoes que estao no maximo
-        //a 10km de distancia e que tenha pelo menos uma das techs filtradas
-        /*  const sendSocketMessageTo = findConnections(
-            {latitude,longitude},
-             techsArray
-             );
-
-             sendMessage(sendSocketMessageTo,'new-dev',dev) */
-
-        return response.json(message)
+        
+        axios.post(`https://chat-room-4fe30.firebaseio.com/messages.json`, { userName, text, roomId })
+        .then(res=>{
+            return response.json(res.data)
+        })
+        .catch(err=>{
+            return response.json(err)
+        })
+       
     },
 }
